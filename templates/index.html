@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>ZList App | 好看的列表</title>
+  <!-- Set render engine for 360 browser -->
+  <meta name="renderer" content="webkit">
+
+  <!-- No Baidu Siteapp-->
+  <meta http-equiv="Cache-Control" content="no-siteapp"/>
+
+  <link rel="shortcut icon" href="/static/images/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="/static/css/amazeui.min.css">
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+
+  <div class="am-container">
+
+    <div id="zlistapp">
+
+      <header class="am-topbar am-topbar-inverse">
+        <h1 class="am-topbar-brand">
+          <a href="#">ZList</a>
+        </h1>
+
+        <button 
+        class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" 
+        data-am-collapse="{target: '#doc-topbar-collapse'}">
+        <span class="am-sr-only">导航切换</span> 
+        <span class="am-icon-bars"></span>
+      </button>
+
+      <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+                    <li><a class="item-source" data-link="/zhihudaily/latest" href="#">知乎日报</a></li>
+          <li class="am-dropdown" data-am-dropdown>
+            <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+              V2EX <span class="am-icon-caret-down"></span>
+            </a>
+            <ul class="am-dropdown-content">
+              <li><a class="item-source" data-link="/v2ex/hot" href="#">V2EX Hot</a></li>
+              <li><a class="item-source" data-link="/v2ex/latest" href="#">V2EX Latest</a></li>
+            </ul>
+          </li>
+
+          <li class="am-dropdown" data-am-dropdown>
+            <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+              简书 <span class="am-icon-caret-down"></span>
+            </a>
+            <ul class="am-dropdown-content">
+              <li><a class="item-source" data-link="/jianshu/now" href="#">当前热门</a></li>
+              <li><a class="item-source" data-link="/jianshu/weekly" href="#">七日热门</a></li>
+              <li><a class="item-source" data-link="/jianshu/monthly" href="#">三十日热门</a></li>
+            </ul>
+          </li>
+
+
+          <li class="am-dropdown" data-am-dropdown>
+            <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+              Hacker News <span class="am-icon-caret-down"></span>
+            </a>
+            <ul class="am-dropdown-content">
+              <li><a class="item-source" data-link="/hackernews/topstories" href="#">Top Stories</a></li>
+              <li><a class="item-source" data-link="/hackernews/newstories" href="#">New Stories</a></li>
+            </ul>
+          </li>
+          <li><a class="item-source" data-link="/producthunt/top" href="#">Product Hunt</a></li>
+        </ul>   
+      </div>
+    </header>
+    <ul id="item-list" class="am-list am-link-muted am-list-striped">
+    </ul>
+  </div>
+</div>
+<script type="text/template" id="item-template">
+<a href="<%- url %>" target="_blank"><%- title %></a>
+</script>
+<script src="/static/js/jquery-1.11.2.min.js"></script>
+<script src="/static/js/underscore-min.js"></script>
+<script src="/static/js/backbone-min.js"></script>
+<script src="/static/js/amazeui.min.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
