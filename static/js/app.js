@@ -36,7 +36,7 @@
             this.listenTo(Items, 'add', this.addOne);
             this.listenTo(Items, 'reset', this.addAll);
             this.listenTo(Items, 'all', this.render);            
-            Items.url='/zhihudaily/latest';
+            Items.url='/jianshu/now';
             Items.fetch({reset:true});
           },
           addOne:function(item){
