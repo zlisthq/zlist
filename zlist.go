@@ -60,6 +60,15 @@ func ZhihuDaily(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(json_items))
 	return
 }
+func Next(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var items []zlistutil.Item
+	items = zlistutil.FetchNEXT(zlistutil.NEXT, 10)
+	json_items, err := json.Marshal(&items)
+	perror(err)
+	fmt.Fprint(w, string(json_items))
+	return
+}
 func ProductHunt(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var items []zlistutil.Item
@@ -106,15 +115,57 @@ func Jianshu(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(json_items))
 	return
 }
+func Wanqu(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var items []zlistutil.Item
+	items = zlistutil.FetchWanqu(zlistutil.WANQU, 10)
+	json_items, err := json.Marshal(&items)
+	perror(err)
+	fmt.Fprint(w, string(json_items))
+	return
+}
+func PingWestNews(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var items []zlistutil.Item
+	items = zlistutil.FetchPingWestNews(zlistutil.PINGWEST_NEWS, 10)
+	json_items, err := json.Marshal(&items)
+	perror(err)
+	fmt.Fprint(w, string(json_items))
+	return
+}
+func Solidot(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var items []zlistutil.Item
+	items = zlistutil.FetchSolidot(zlistutil.SOLIDOT, 10)
+	json_items, err := json.Marshal(&items)
+	perror(err)
+	fmt.Fprint(w, string(json_items))
+	return
+}
+func Github(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var items []zlistutil.Item
+	items = zlistutil.FetchGitHub(zlistutil.GITHUB, 10)
+	json_items, err := json.Marshal(&items)
+	perror(err)
+	fmt.Fprint(w, string(json_items))
+	return
+}
 func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 	router.HandleFunc("/", Index)
+	router.HandleFunc("/producthunt/top", ProductHunt)
+	router.HandleFunc("/jianshu/{list_name}", Jianshu)
+	router.HandleFunc("/36kr/next", Next)
+	router.HandleFunc("/hackernews/{list_name}", HackerNews)
 	router.HandleFunc("/v2ex/{list_name}", V2ex)
 	router.HandleFunc("/zhihudaily/latest", ZhihuDaily)
-	router.HandleFunc("/hackernews/{list_name}", HackerNews)
-	router.HandleFunc("/jianshu/{list_name}", Jianshu)
-	router.HandleFunc("/producthunt/top", ProductHunt)
+	router.HandleFunc("/wanqu/top", Wanqu)
+	router.HandleFunc("/pingwest/news", PingWestNews)
+	router.HandleFunc("/solidot/top", Solidot)
+	router.HandleFunc("/github/top", Github)
+
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

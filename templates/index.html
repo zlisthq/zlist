@@ -21,10 +21,10 @@
 <body>
 
 
-    <div id="zlistapp">
+  <div id="zlistapp">
 
-      <header class="am-topbar am-topbar-inverse">
-        <div class="am-container">
+    <header class="am-topbar am-topbar-inverse">
+      <div class="am-container">
         <h1 class="am-topbar-brand">
           <a href="#">ZList</a>
         </h1>
@@ -35,68 +35,80 @@
         <span class="am-sr-only">导航切换</span> 
         <span class="am-icon-bars"></span>
       </button>
-
       <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-        <ul class="am-nav am-nav-pills am-topbar-nav">
-                    <li><a class="item-source" data-link="/zhihudaily/latest" href="#">知乎日报</a></li>
-          <li class="am-dropdown" data-am-dropdown>
-            <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-              V2EX <span class="am-icon-caret-down"></span>
-            </a>
-            <ul class="am-dropdown-content">
-              <li><a class="item-source" data-link="/v2ex/hot" href="#">V2EX Hot</a></li>
-              <li><a class="item-source" data-link="/v2ex/latest" href="#">V2EX Latest</a></li>
-            </ul>
-          </li>
-
-          <li class="am-dropdown" data-am-dropdown>
-            <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-              简书 <span class="am-icon-caret-down"></span>
-            </a>
-            <ul class="am-dropdown-content">
-              <li><a class="item-source" data-link="/jianshu/now" href="#">当前热门</a></li>
-              <li><a class="item-source" data-link="/jianshu/weekly" href="#">七日热门</a></li>
-              <li><a class="item-source" data-link="/jianshu/monthly" href="#">三十日热门</a></li>
-            </ul>
-          </li>
-
-
-          <li class="am-dropdown" data-am-dropdown>
-            <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-              Hacker News <span class="am-icon-caret-down"></span>
-            </a>
-            <ul class="am-dropdown-content">
-              <li><a class="item-source" data-link="/hackernews/topstories" href="#">Top Stories</a></li>
-              <li><a class="item-source" data-link="/hackernews/newstories" href="#">New Stories</a></li>
-            </ul>
-          </li>
-          <li><a class="item-source" data-link="/producthunt/top" href="#">Product Hunt</a></li>
-        </ul>   
-
- <div class="am-topbar-right">
-      <a class="am-btn am-btn-success am-topbar-btn am-btn-sm" href="https://github.com/WhiteWorld/zlist" target="_blank">GitHub</a>
-    </div>
-     <div class="am-topbar-right">
-      <a class="am-btn am-btn-success am-topbar-btn am-btn-sm" href="https://gitcafe.com/whiteworld/zlist" target="_blank">GitCafe</a>
-    </div>
+        <div class="am-topbar-right">
+          <a class="am-btn am-btn-success am-topbar-btn am-btn-sm" href="https://github.com/WhiteWorld/zlist" target="_blank">GitHub</a>
+        </div>
+        <div class="am-topbar-right">
+          <a class="am-btn am-btn-success am-topbar-btn am-btn-sm" href="https://gitcafe.com/whiteworld/zlist" target="_blank">GitCafe</a>
+        </div>
       </div>
 
     </div>
-    </header>
+  </header>
+  <div class="am-container">
+    <div class="am-g">
+      <div class = "am-u-md-12">
+
+        <button type="button" class="item-source am-btn am-btn-default am-round" data-link="/zhihudaily/latest">知乎日报</button>
+        <div class="am-dropdown" data-am-dropdown>
+          <button class="am-btn am-btn-default am-round am-dropdown-toggle" data-am-dropdown-toggle>V2EX <span class="am-icon-caret-down"></span></button>
+          <ul class="am-dropdown-content">
+            <li><a class="item-source" data-link="/v2ex/hot" href="#">V2EX Hot</a></li>
+            <li class="am-divider"></li>
+            <li><a class="item-source" data-link="/v2ex/latest" href="#">V2EX Latest</a></li>
+          </ul>
+        </div>
+        <div class="am-dropdown" data-am-dropdown>
+          <button class="am-btn am-btn-default am-round am-dropdown-toggle" data-am-dropdown-toggle>简书 <span class="am-icon-caret-down"></span></button>
+          <ul class="am-dropdown-content">
+            <li><a class="item-source" data-link="/jianshu/now" href="#">当前热门</a></li>
+            <li class="am-divider"></li>
+            <li><a class="item-source" data-link="/jianshu/weekly" href="#">七日热门</a></li>
+            <li class="am-divider"></li>
+            <li><a class="item-source" data-link="/jianshu/monthly" href="#">三十日热门</a></li>
+          </ul>
+        </div>
+        <div class="am-dropdown" data-am-dropdown>
+          <button class="am-btn am-btn-default am-round am-dropdown-toggle" data-am-dropdown-toggle>Hacker News <span class="am-icon-caret-down"></span></button>
+          <ul class="am-dropdown-content">
+              <li><a class="item-source" data-link="/hackernews/topstories" href="#">Top Stories</a></li>
+            <li class="am-divider"></li>
+              <li><a class="item-source" data-link="/hackernews/newstories" href="#">New Stories</a></li>
+          </ul>
+        </div>
+        <button type="button" class="item-source am-btn am-btn-default am-round" data-link="/producthunt/top">Product Hunt</button>
+        <button type="button" class="item-source am-btn am-btn-default am-round" data-link="/36kr/next">NEXT</button>
+
+      </div>
+    </div>
+  </div>
+  <div class="am-container" style="margin-top:0.5rem;margin-bottom:0.5rem;">
+    <div class="am-g">
+      <div class = "am-u-md-12">
+        <button type="button" class="item-source am-btn am-btn-default am-round" data-link="/wanqu/top">湾区日报</button>
+        <button type="button" class="item-source am-btn am-btn-default am-round" data-link="/pingwest/news">PingWest 快讯</button>
+
+        <button type="button" class="item-source am-btn am-btn-default am-round" data-link="/solidot/top">Solidot</button>
+        <button type="button" class="item-source am-btn am-btn-default am-round" data-link="/github/top">GitHub</button>
+        </div>
+      </div>
+    </div>
+
     <div class="am-container">
-    <ul id="item-list" class="am-list am-link-muted am-list-striped">
-    </ul>
+      <ul id="item-list" class="am-list am-link-muted am-list-striped">
+      </ul>
+
+    </div>
 
   </div>
-
-  </div>
-<script type="text/template" id="item-template">
-<a href="<%- url %>" target="_blank"><%- title %></a>
-</script>
-<script src="/static/js/jquery-1.11.2.min.js"></script>
-<script src="/static/js/underscore-min.js"></script>
-<script src="/static/js/backbone-min.js"></script>
-<script src="/static/js/amazeui.min.js"></script>
-<script src="/static/js/app.js"></script>
+  <script type="text/template" id="item-template">
+  <a href="<%- url %>" target="_blank"><%- title %></a>
+  </script>
+  <script src="/static/js/jquery-1.11.2.min.js"></script>
+  <script src="/static/js/underscore-min.js"></script>
+  <script src="/static/js/backbone-min.js"></script>
+  <script src="/static/js/amazeui.min.js"></script>
+  <script src="/static/js/app.js"></script>
 </body>
 </html>
