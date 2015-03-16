@@ -151,6 +151,24 @@ func Github(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(json_items))
 	return
 }
+func DoubanMoment(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var items []zlistutil.Item
+	items = zlistutil.FetchDoubanMoment(zlistutil.DOUBAN_MOMENT, 10)
+	json_items, err := json.Marshal(&items)
+	perror(err)
+	fmt.Fprint(w, string(json_items))
+	return
+}
+func IfanrSurvey(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var items []zlistutil.Item
+	items = zlistutil.FetchIfanr(zlistutil.IFANR, 10)
+	json_items, err := json.Marshal(&items)
+	perror(err)
+	fmt.Fprint(w, string(json_items))
+	return
+}
 func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
@@ -166,6 +184,7 @@ func main() {
 	router.HandleFunc("/pingwest/news", PingWestNews)
 	router.HandleFunc("/solidot/top", Solidot)
 	router.HandleFunc("/github/top", Github)
-
+	router.HandleFunc("/douban/moment", DoubanMoment)
+	router.HandleFunc("/ifanr/survey", IfanrSurvey)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

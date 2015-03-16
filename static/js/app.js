@@ -29,7 +29,9 @@
         var AppView = Backbone.View.extend({
           el:$("#zlistapp"),
           events:{
-            "click .item-source": "showItemList"
+            "click .item-source": "showItemList",
+            "click .my-active": "showActive"
+
           },
           initialize:function(){
             // alert("hha");
@@ -54,8 +56,11 @@
             Items.url=$(ev.currentTarget).data('link');
             Items.fetch({reset:true});
             $(".am-dropdown").dropdown("close");
+          },
+          showActive:function(ev){
+            $(".my-active").removeClass("am-active");
+            $(ev.currentTarget).addClass("am-active");
           }
-
         });
         var App = new AppView;
     });
