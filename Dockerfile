@@ -1,6 +1,6 @@
-# shadowsocks
+# zlist
 #
-# VERSION 0.0.1
+# VERSION 1.0
 
 FROM golang
 MAINTAINER Whiteworld <ljq258@gmail.com>
