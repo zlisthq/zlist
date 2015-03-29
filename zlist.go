@@ -72,7 +72,7 @@ func Next(w http.ResponseWriter, r *http.Request) {
 func ProductHunt(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var items []zlistutil.Item
-	items = zlistutil.FetchProductHunt(zlistutil.PRODUCTHUNT_DAY, 10)
+	items = zlistutil.FetchProductHunt(zlistutil.PRODUCTHUNT_TODAY, 10)
 	json_items, err := json.Marshal(&items)
 	perror(err)
 	fmt.Fprint(w, string(json_items))
@@ -169,6 +169,15 @@ func IfanrSurvey(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(json_items))
 	return
 }
+func MindStore(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var items []zlistutil.Item
+	items = zlistutil.FetchMindStore(zlistutil.MINDSTORE, 10)
+	json_items, err := json.Marshal(&items)
+	perror(err)
+	fmt.Fprint(w, string(json_items))
+	return
+}
 func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
@@ -186,5 +195,6 @@ func main() {
 	router.HandleFunc("/github/top", Github)
 	router.HandleFunc("/douban/moment", DoubanMoment)
 	router.HandleFunc("/ifanr/survey", IfanrSurvey)
+	router.HandleFunc("/mindstore/top", MindStore)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

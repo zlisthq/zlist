@@ -12,5 +12,5 @@
 
 ## TODO
 
-- 页面可定制化
-- 添加测试
+- Custom UI
+- Add tests
