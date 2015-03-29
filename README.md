@@ -14,3 +14,5 @@
 
 - Custom UI
 - Add tests
+- Add Cache
+- Use Gin
