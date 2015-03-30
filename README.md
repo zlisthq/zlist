@@ -6,6 +6,10 @@
 
 [zlist.whiteworld.me](http://zlist.whiteworld.me/)
 
+or
+
+[在 DaoCloud 上部署的版本](http://whiteworld-zlist-1.daoapp.io/)
+
 ## 部署文档
 
 [使用 Docker 部署 Go 程序](http://blog.whiteworld.me/deploy-go-apps-with-docker/)
