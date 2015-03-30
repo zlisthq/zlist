@@ -6,6 +6,10 @@
 
 [zlist.whiteworld.me](http://zlist.whiteworld.me/)
 
+## 主要依赖的库
+
+[zlistutil](https://github.com/WhiteWorld/zlistutil)
+
 ## 部署文档
 
 [使用 Docker 部署 Go 程序](http://blog.whiteworld.me/deploy-go-apps-with-docker/)
@@ -13,6 +17,6 @@
 ## TODO
 
 - Custom UI
-- Add tests
-- Add Cache
+- Add Tests
+- Add Cache(Redis)
 - Use Gin
