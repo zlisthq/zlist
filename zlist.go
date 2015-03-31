@@ -178,6 +178,15 @@ func MindStore(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(json_items))
 	return
 }
+func Kickstarter(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	var items []zlistutil.Item
+	items = zlistutil.FetchKickstarter(zlistutil.KICKSTARTER, 10)
+	json_items, err := json.Marshal(&items)
+	perror(err)
+	fmt.Fprint(w, string(json_items))
+	return
+}
 func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
@@ -196,5 +205,6 @@ func main() {
 	router.HandleFunc("/douban/moment", DoubanMoment)
 	router.HandleFunc("/ifanr/survey", IfanrSurvey)
 	router.HandleFunc("/mindstore/top", MindStore)
+	router.HandleFunc("/kickstarter/latest", Kickstarter)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
