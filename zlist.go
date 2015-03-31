@@ -84,8 +84,7 @@ func HackerNews(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	listName := vars["list_name"]
 	var url string
-	if listName == "topstories" || listName == "newstories"
-	||listName == "askstories"||listName == "showstories" {
+	if listName == "topstories" || listName == "newstories" || listName == "askstories" || listName == "showstories" {
 		url = zlistutil.HACKER_NEWS_BASE_API_URL + "/v0/" + listName + ".json"
 	} else {
 		http.NotFound(w, r)

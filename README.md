@@ -4,7 +4,7 @@
 
 ## 网页版
 
-[zlist.whiteworld.me](http://zlist.whiteworld.me/)
+[zlist.whiteworld.me](http://zlist.whiteworld.me/) 和 [部署在 DaoCloud 上的版本](http://whiteworld-zlist-1.daoapp.io/)
 
 ## 主要依赖的库
 
