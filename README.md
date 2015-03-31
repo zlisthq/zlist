@@ -10,6 +10,10 @@ or
 
 [在 DaoCloud 上部署的版本](http://whiteworld-zlist-1.daoapp.io/)
 
+## 主要依赖的库
+
+[zlistutil](https://github.com/WhiteWorld/zlistutil)
+
 ## 部署文档
 
 [使用 Docker 部署 Go 程序](http://blog.whiteworld.me/deploy-go-apps-with-docker/)
@@ -17,6 +21,6 @@ or
 ## TODO
 
 - Custom UI
-- Add tests
-- Add Cache
+- Add Tests
+- Add Cache(Redis)
 - Use Gin
