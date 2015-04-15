@@ -10,7 +10,7 @@ Dev: [whiteworld-zlist-dev.daoapp.io](http://whiteworld-zlist-dev.daoapp.io/)
 
 ## 主要依赖的库
 
-[zlistutil](https://github.com/WhiteWorld/zlistutil)
+[zlistutil](https://github.com/zlisthq/zlistutil)
 
 ## 部署文档
 
