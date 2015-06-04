@@ -14,7 +14,7 @@ Dev: [whiteworld-zlist-dev.daoapp.io](http://whiteworld-zlist-dev.daoapp.io/)
 
 ## 部署文档
 
-[使用 Docker 部署 Go 程序](http://blog.whiteworld.me/deploy-go-apps-with-docker/)
+[使用 Docker 部署 Go 程序](http://blog.whiteworld.me/post/deploy-go-apps-with-docker/)
 
 ## TODO
 
