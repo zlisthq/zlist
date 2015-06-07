@@ -3,13 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/zlisthq/zlistutil"
 	"github.com/gorilla/mux"
+	"github.com/zlisthq/zlistutil"
 	"html/template"
 	"log"
 	"net/http"
 )
-
+const NUM int = 10
 func perror(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -33,9 +33,17 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	perror(err)
 
 }
+
+func getJSONString(site string, url string, num int) string {
+	var items []zlistutil.Item
+	items = zlistutil.GetItem(site, url, num)
+	json_items, err := json.Marshal(&items)
+	perror(err)
+	return string(json_items)
+}
+
 func V2ex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
 	vars := mux.Vars(r)
 	listName := vars["list_name"]
 	var url string
@@ -45,42 +53,30 @@ func V2ex(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	items = zlistutil.FetchV2ex(url, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_V2EX, url, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func ZhihuDaily(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchZhihuDaily(zlistutil.DAILY_FETCH_NOW, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_ZHIHUDAILY, zlistutil.DAILY_FETCH_NOW, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func Next(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchNEXT(zlistutil.NEXT, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_NEXT, zlistutil.NEXT, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func ProductHunt(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchProductHunt(zlistutil.PRODUCTHUNT_TODAY, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_PRODUCTHUNT, zlistutil.PRODUCTHUNT_TODAY, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func HackerNews(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
 	vars := mux.Vars(r)
 	listName := vars["list_name"]
 	var url string
@@ -91,15 +87,12 @@ func HackerNews(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// fmt.Println(url)
-	items = zlistutil.FetchHackerNews(url, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_HACKERNEWS, url, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func Jianshu(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
 	vars := mux.Vars(r)
 	listName := vars["list_name"]
 	var url string
@@ -109,82 +102,56 @@ func Jianshu(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	items = zlistutil.FetchJianshu(url, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_JIANSHU, url, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func Wanqu(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchWanqu(zlistutil.WANQU, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_WANQU, zlistutil.WANQU, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func PingWestNews(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchPingWestNews(zlistutil.PINGWEST_NEWS, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_PINGWEST, zlistutil.PINGWEST_NEWS, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func Solidot(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchSolidot(zlistutil.SOLIDOT, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_SOLIDOT, zlistutil.SOLIDOT, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func Github(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchGitHub(zlistutil.GITHUB, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_GITHUB, zlistutil.GITHUB, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func DoubanMoment(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchDoubanMoment(zlistutil.DOUBAN_MOMENT, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_DOUBANMOMENT, zlistutil.DOUBAN_MOMENT, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func IfanrSurvey(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchIfanr(zlistutil.IFANR, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_IFANR, zlistutil.IFANR, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func MindStore(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchMindStore(zlistutil.MINDSTORE, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_MINDSTORE, zlistutil.MINDSTORE, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func Kickstarter(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	var items []zlistutil.Item
-	items = zlistutil.FetchKickstarter(zlistutil.KICKSTARTER, 10)
-	json_items, err := json.Marshal(&items)
-	perror(err)
-	fmt.Fprint(w, string(json_items))
+	str := getJSONString(zlistutil.SITE_KICKSTARTER, zlistutil.KICKSTARTER, NUM)
+	fmt.Fprint(w, str)
 	return
 }
 func main() {
