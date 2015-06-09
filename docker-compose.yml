@@ -1,0 +1,4 @@
+zlist:
+  build: .
+  ports:
+   - "7000:8080"

@@ -8,5 +8,3 @@ RUN go get github.com/zlisthq/zlist
 
 WORKDIR /go/src/github.com/zlisthq/zlist
 ENTRYPOINT /go/bin/zlist
-
-EXPOSE 8080
