@@ -3,13 +3,24 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/garyburd/redigo/redis"
 	"github.com/gorilla/mux"
 	"github.com/zlisthq/zlistutil"
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 )
-const NUM int = 10
+
+const (
+	Num int = 10
+	CacheExpire int = 60*30
+)
+
+var (
+	conn, err = redis.Dial("tcp", os.Getenv("REDIS_PORT_6379_TCP_ADDR")+":"+os.Getenv("REDIS_PORT_6379_TCP_PORT"))
+)
+
 func perror(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -26,12 +37,22 @@ func ServeStatic(router *mux.Router, staticDirectory string) {
 		router.PathPrefix(pathPrefix).Handler(http.StripPrefix(pathPrefix, http.FileServer(http.Dir(pathValue))))
 	}
 }
+
+func getJSONStringCached(site string, url string, num int) string {
+	jsonString, err := redis.String(conn.Do("GET", url))
+	if err != nil {
+		jsonString = getJSONString(site, url, num)
+		conn.Do("SETEX", url, "300", jsonString)
+		log.Println("set:" + url)
+	}
+	return jsonString
+}
+
 func Index(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("templates/index.html")
 	perror(err)
 	err = t.Execute(w, nil)
 	perror(err)
-
 }
 
 func getJSONString(site string, url string, num int) string {
@@ -53,25 +74,25 @@ func V2ex(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	str := getJSONString(zlistutil.SITE_V2EX, url, NUM)
+	str := getJSONStringCached(zlistutil.SITE_V2EX, url, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func ZhihuDaily(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_ZHIHUDAILY, zlistutil.DAILY_FETCH_NOW, NUM)
+	str := getJSONStringCached(zlistutil.SITE_ZHIHUDAILY, zlistutil.DAILY_FETCH_NOW, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func Next(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_NEXT, zlistutil.NEXT, NUM)
+	str := getJSONStringCached(zlistutil.SITE_NEXT, zlistutil.NEXT, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func ProductHunt(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_PRODUCTHUNT, zlistutil.PRODUCTHUNT_TODAY, NUM)
+	str := getJSONStringCached(zlistutil.SITE_PRODUCTHUNT, zlistutil.PRODUCTHUNT_TODAY, Num)
 	fmt.Fprint(w, str)
 	return
 }
@@ -87,7 +108,7 @@ func HackerNews(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// fmt.Println(url)
-	str := getJSONString(zlistutil.SITE_HACKERNEWS, url, NUM)
+	str := getJSONStringCached(zlistutil.SITE_HACKERNEWS, url, Num)
 	fmt.Fprint(w, str)
 	return
 }
@@ -102,60 +123,61 @@ func Jianshu(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	str := getJSONString(zlistutil.SITE_JIANSHU, url, NUM)
+	str := getJSONStringCached(zlistutil.SITE_JIANSHU, url, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func Wanqu(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_WANQU, zlistutil.WANQU, NUM)
+	str := getJSONStringCached(zlistutil.SITE_WANQU, zlistutil.WANQU, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func PingWestNews(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_PINGWEST, zlistutil.PINGWEST_NEWS, NUM)
+	str := getJSONStringCached(zlistutil.SITE_PINGWEST, zlistutil.PINGWEST_NEWS, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func Solidot(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_SOLIDOT, zlistutil.SOLIDOT, NUM)
+	str := getJSONStringCached(zlistutil.SITE_SOLIDOT, zlistutil.SOLIDOT, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func Github(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_GITHUB, zlistutil.GITHUB, NUM)
+	str := getJSONStringCached(zlistutil.SITE_GITHUB, zlistutil.GITHUB, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func DoubanMoment(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_DOUBANMOMENT, zlistutil.DOUBAN_MOMENT, NUM)
+	str := getJSONStringCached(zlistutil.SITE_DOUBANMOMENT, zlistutil.DOUBAN_MOMENT, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func IfanrSurvey(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_IFANR, zlistutil.IFANR, NUM)
+	str := getJSONStringCached(zlistutil.SITE_IFANR, zlistutil.IFANR, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func MindStore(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_MINDSTORE, zlistutil.MINDSTORE, NUM)
+	str := getJSONStringCached(zlistutil.SITE_MINDSTORE, zlistutil.MINDSTORE, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func Kickstarter(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	str := getJSONString(zlistutil.SITE_KICKSTARTER, zlistutil.KICKSTARTER, NUM)
+	str := getJSONStringCached(zlistutil.SITE_KICKSTARTER, zlistutil.KICKSTARTER, Num)
 	fmt.Fprint(w, str)
 	return
 }
 func main() {
-
+	log.Println("REDIS HOST:" + os.Getenv("REDIS_PORT_6379_TCP_ADDR"))
+	log.Println("REDIS PORT:" + os.Getenv("REDIS_PORT_6379_TCP_PORT"))
 	router := mux.NewRouter().StrictSlash(true)
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 	router.HandleFunc("/", Index)
@@ -173,5 +195,5 @@ func main() {
 	router.HandleFunc("/ifanr/survey", IfanrSurvey)
 	router.HandleFunc("/mindstore/top", MindStore)
 	router.HandleFunc("/kickstarter/latest", Kickstarter)
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Println(http.ListenAndServe(":8080", router))
 }

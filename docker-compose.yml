@@ -2,3 +2,8 @@ zlist:
   build: .
   ports:
    - "7000:8080"
+  links:
+   - redis
+
+redis:
+  image: redis
