@@ -225,7 +225,7 @@ func jobRefreshCache() {
 }
 func main() {
 	c := cron.New()
-	c.AddFunc("0 */15 * * * ?", jobRefreshCache)
+	c.AddFunc("0 */5 * * * ?", jobRefreshCache)
 	c.Start()
 	log.Println("REDIS HOST:" + os.Getenv("REDIS_PORT_6379_TCP_ADDR"))
 	log.Println("REDIS PORT:" + os.Getenv("REDIS_PORT_6379_TCP_PORT"))
