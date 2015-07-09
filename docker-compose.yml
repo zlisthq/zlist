@@ -7,3 +7,5 @@ zlist:
 
 redis:
   image: redis
+  environment:
+   - TZ=Asia/Shanghai

@@ -48,7 +48,7 @@ func getJSONStringCached(site string, url string, num int) string {
 	if err != nil {
 		jsonString = getJSONString(site, url, num)
 		conn.Do("SETEX", url, "300", jsonString)
-		// log.Println("Cache: set " + url)
+		log.Println("Cache: set " + url)
 	}
 	return jsonString
 }
@@ -179,8 +179,14 @@ func Kickstarter(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, str)
 	return
 }
-
-func refreshCache() {
+func Refresh(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	refreshCache(true)
+	str := "{'code':'OK'}"
+	fmt.Fprint(w, str)
+	return
+}
+func refreshCache(flag bool) {
 	urlSite := map[string]string{
 		zlistutil.V2EX_BASE_URL + "hot.json":                        zlistutil.SITE_V2EX,
 		zlistutil.V2EX_BASE_URL + "latest.json":                     zlistutil.SITE_V2EX,
@@ -203,22 +209,30 @@ func refreshCache() {
 		zlistutil.MINDSTORE:                                         zlistutil.SITE_MINDSTORE,
 		zlistutil.KICKSTARTER:                                       zlistutil.SITE_KICKSTARTER,
 	}
-	log.Println(time.Now())
 	log.Println("start refresh...")
+	log.Println(time.Now())
+	log.Printf("Clean exist cache ? %t",flag)
 	for url, site := range urlSite {
+		if flag==true && conn!= nil{
+			conn.Do("DEL", url)
+		}
 		getJSONStringCached(site, url, Num)
 	}
 	log.Println("stop refresh...")
 }
+func jobRefreshCache() {
+	refreshCache(false)
+}
 func main() {
 	c := cron.New()
-	c.AddFunc("0 */15 * * * ?", refreshCache)
+	c.AddFunc("0 */15 * * * ?", jobRefreshCache)
 	c.Start()
 	log.Println("REDIS HOST:" + os.Getenv("REDIS_PORT_6379_TCP_ADDR"))
 	log.Println("REDIS PORT:" + os.Getenv("REDIS_PORT_6379_TCP_PORT"))
 	router := mux.NewRouter().StrictSlash(true)
 	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 	router.HandleFunc("/", Index)
+	router.HandleFunc("/refresh", Refresh)
 	router.HandleFunc("/producthunt/top", ProductHunt)
 	router.HandleFunc("/jianshu/{list_name}", Jianshu)
 	router.HandleFunc("/36kr/next", Next)
