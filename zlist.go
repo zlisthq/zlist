@@ -15,8 +15,8 @@ import (
 )
 
 const (
-	Num         int = 10
-	CacheExpire int = 60 * 30
+	Num         int    = 10
+	CacheExpire string = "1800"
 )
 
 var (
@@ -47,7 +47,7 @@ func getJSONStringCached(site string, url string, num int) string {
 	jsonString, err := redis.String(conn.Do("GET", url))
 	if err != nil {
 		jsonString = getJSONString(site, url, num)
-		conn.Do("SETEX", url, "300", jsonString)
+		conn.Do("SETEX", url, CacheExpire, jsonString)
 		log.Println("Cache: set " + url)
 	}
 	return jsonString
@@ -211,9 +211,9 @@ func refreshCache(flag bool) {
 	}
 	log.Println("start refresh...")
 	log.Println(time.Now())
-	log.Printf("Clean exist cache ? %t",flag)
+	log.Printf("Clean exist cache ? %t", flag)
 	for url, site := range urlSite {
-		if flag==true && conn!= nil{
+		if flag == true && conn != nil {
 			conn.Do("DEL", url)
 		}
 		getJSONStringCached(site, url, Num)
