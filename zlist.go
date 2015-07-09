@@ -5,16 +5,18 @@ import (
 	"fmt"
 	"github.com/garyburd/redigo/redis"
 	"github.com/gorilla/mux"
+	"github.com/robfig/cron"
 	"github.com/zlisthq/zlistutil"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 const (
-	Num int = 10
-	CacheExpire int = 60*30
+	Num         int = 10
+	CacheExpire int = 60 * 30
 )
 
 var (
@@ -39,11 +41,14 @@ func ServeStatic(router *mux.Router, staticDirectory string) {
 }
 
 func getJSONStringCached(site string, url string, num int) string {
+	if conn == nil {
+		return getJSONString(site, url, num)
+	}
 	jsonString, err := redis.String(conn.Do("GET", url))
 	if err != nil {
 		jsonString = getJSONString(site, url, num)
 		conn.Do("SETEX", url, "300", jsonString)
-		log.Println("set:" + url)
+		// log.Println("Cache: set " + url)
 	}
 	return jsonString
 }
@@ -107,7 +112,6 @@ func HackerNews(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	// fmt.Println(url)
 	str := getJSONStringCached(zlistutil.SITE_HACKERNEWS, url, Num)
 	fmt.Fprint(w, str)
 	return
@@ -175,7 +179,41 @@ func Kickstarter(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, str)
 	return
 }
+
+func refreshCache() {
+	urlSite := map[string]string{
+		zlistutil.V2EX_BASE_URL + "hot.json":                        zlistutil.SITE_V2EX,
+		zlistutil.V2EX_BASE_URL + "latest.json":                     zlistutil.SITE_V2EX,
+		zlistutil.DAILY_FETCH_NOW:                                   zlistutil.SITE_ZHIHUDAILY,
+		zlistutil.NEXT:                                              zlistutil.SITE_NEXT,
+		zlistutil.PRODUCTHUNT_TODAY:                                 zlistutil.SITE_PRODUCTHUNT,
+		zlistutil.HACKER_NEWS_BASE_API_URL + "/v0/topstories.json":  zlistutil.SITE_HACKERNEWS,
+		zlistutil.HACKER_NEWS_BASE_API_URL + "/v0/newstories.json":  zlistutil.SITE_HACKERNEWS,
+		zlistutil.HACKER_NEWS_BASE_API_URL + "/v0/askstories.json":  zlistutil.SITE_HACKERNEWS,
+		zlistutil.HACKER_NEWS_BASE_API_URL + "/v0/showstories.json": zlistutil.SITE_HACKERNEWS,
+		zlistutil.JIANSHU_BASE_URL + "/trending/now":                zlistutil.SITE_JIANSHU,
+		zlistutil.JIANSHU_BASE_URL + "/trending/weekly":             zlistutil.SITE_JIANSHU,
+		zlistutil.JIANSHU_BASE_URL + "/trending/monthly":            zlistutil.SITE_JIANSHU,
+		zlistutil.WANQU:                                             zlistutil.SITE_WANQU,
+		zlistutil.PINGWEST_NEWS:                                     zlistutil.SITE_PINGWEST,
+		zlistutil.SOLIDOT:                                           zlistutil.SITE_SOLIDOT,
+		zlistutil.GITHUB:                                            zlistutil.SITE_GITHUB,
+		zlistutil.DOUBAN_MOMENT:                                     zlistutil.SITE_DOUBANMOMENT,
+		zlistutil.IFANR:                                             zlistutil.SITE_IFANR,
+		zlistutil.MINDSTORE:                                         zlistutil.SITE_MINDSTORE,
+		zlistutil.KICKSTARTER:                                       zlistutil.SITE_KICKSTARTER,
+	}
+	log.Println(time.Now())
+	log.Println("start refresh...")
+	for url, site := range urlSite {
+		getJSONStringCached(site, url, Num)
+	}
+	log.Println("stop refresh...")
+}
 func main() {
+	c := cron.New()
+	c.AddFunc("0 */15 * * * ?", refreshCache)
+	c.Start()
 	log.Println("REDIS HOST:" + os.Getenv("REDIS_PORT_6379_TCP_ADDR"))
 	log.Println("REDIS PORT:" + os.Getenv("REDIS_PORT_6379_TCP_PORT"))
 	router := mux.NewRouter().StrictSlash(true)
