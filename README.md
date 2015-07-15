@@ -12,9 +12,15 @@ Dev: [whiteworld-zlist-dev.daoapp.io](http://whiteworld-zlist-dev.daoapp.io/)
 
 [zlistutil](https://github.com/zlisthq/zlistutil)
 
-## 部署文档
+## 运行部署
 
-[使用 Docker 部署 Go 程序](http://blog.whiteworld.me/post/deploy-go-apps-with-docker/)
+    # 方式1: 使用官方 zlist 镜像，没有 Redis 缓存功能 
+    docker run -p 8080:8080 whiteworld/zlist
+    # 方式2: 使用 Reids 缓存服务
+    git clone git@github.com:zlisthq/zlist.git
+    cd zlist
+    docker-compose build 
+    docker-compose up
 
 ## TODO
 
