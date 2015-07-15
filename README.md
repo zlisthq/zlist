@@ -19,7 +19,6 @@ Dev: [whiteworld-zlist-dev.daoapp.io](http://whiteworld-zlist-dev.daoapp.io/)
     # 方式2: 使用 Reids 缓存服务
     git clone git@github.com:zlisthq/zlist.git
     cd zlist
-    docker-compose build 
     docker-compose up
 
 ## TODO
