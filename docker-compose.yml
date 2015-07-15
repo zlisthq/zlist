@@ -1,5 +1,5 @@
 zlist:
-  build: whiteworld/zlist
+  image: whiteworld/zlist
   ports:
    - "7000:8080"
   links:
