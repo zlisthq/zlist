@@ -179,6 +179,12 @@ func Kickstarter(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, str)
 	return
 }
+func Toutiao(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	str := getJSONStringCached(zlistutil.SITE_TOUTIAO, zlistutil.TOUTIAO, Num)
+	fmt.Fprint(w, str)
+	return
+}
 func Refresh(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	refreshCache(true)
@@ -208,6 +214,7 @@ func refreshCache(flag bool) {
 		zlistutil.IFANR:                                             zlistutil.SITE_IFANR,
 		zlistutil.MINDSTORE:                                         zlistutil.SITE_MINDSTORE,
 		zlistutil.KICKSTARTER:                                       zlistutil.SITE_KICKSTARTER,
+		zlistutil.TOUTIAO:                                           zlistutil.SITE_TOUTIAO,
 	}
 	log.Println("start refresh...")
 	log.Println(time.Now())
@@ -247,5 +254,6 @@ func main() {
 	router.HandleFunc("/ifanr/survey", IfanrSurvey)
 	router.HandleFunc("/mindstore/top", MindStore)
 	router.HandleFunc("/kickstarter/latest", Kickstarter)
+	router.HandleFunc("/toutiao/top", Toutiao)
 	log.Println(http.ListenAndServe(":8080", router))
 }

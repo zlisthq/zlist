@@ -1,0 +1,161 @@
+[
+    {
+        "name": "首页",
+        "info": [
+            {
+                "name": "知乎日报",
+                "url": "/zhihudaily/latest"
+            }
+        ]
+    },
+    {
+        "name": "知乎日报",
+        "info": [
+            {
+                "name": "知乎日报",
+                "url": "/zhihudaily/latest"
+            }
+        ]
+    },
+    {
+        "name": "V2EX",
+        "info": [
+            {
+                "name": "最热话题",
+                "url": "/v2ex/hot"
+            },
+            {
+                "name": "最新话题",
+                "url": "/v2ex/latest"
+            }
+        ]
+    },
+    {
+        "name": "开发者头条",
+        "info": [
+            {
+                "name": "今日头条",
+                "url": "/toutiao/top"
+            }
+        ]
+    },
+    {
+        "name": "简书",
+        "info": [
+            {
+                "name": "当日最热",
+                "url": "/jianshu/now"
+            },
+            {
+                "name": "七日最热",
+                "url": "/jianshu/weekly"
+            },
+            {
+                "name": "三十日最热",
+                "url": "/jianshu/monthly"
+            }
+        ]
+    },
+    {
+        "name": "Hacker News",
+        "info": [
+            {
+                "name": "Top Stories",
+                "url": "/hackernews/topstories"
+            },
+            {
+                "name": "New Stories",
+                "url": "/hackernews/newstories"
+            },
+            {
+                "name": "Show HN",
+                "url": "/hackernews/showstories"
+            },
+            {
+                "name": "Ask HN",
+                "url": "/hackernews/askstories"
+            }
+        ]
+    },
+    {
+        "name": "每日新产品合集",
+        "info": [
+            {
+                "name": "Product Hunt",
+                "url": "/producthunt/top"
+            },
+            {
+                "name": "NEXT",
+                "url": "/36kr/next"
+            },
+            {
+                "name": "MindStore",
+                "url": "/mindstore/top"
+            }
+
+        ]
+    },
+    {
+        "name": "湾区日报",
+        "info": [
+            {
+                "name": "湾区日报",
+                "url": "/wanqu/top"
+            }
+        ]
+    },
+    {
+        "name": "PingWest",
+        "info": [
+            {
+                "name": "快讯",
+                "url": "/pingwest/news"
+            }
+        ]
+    },
+    {
+        "name": "Solidot",
+        "info": [
+            {
+                "name": "Solidot",
+                "url": "/solidot/top"
+            }
+        ]
+    },
+    {
+        "name": "GitHub Explore",
+        "info": [
+            {
+                "name": "Explore",
+                "url": "/github/top"
+            }
+        ]
+    },
+    {
+        "name": "豆瓣一刻",
+        "info": [
+            {
+                "name": "一刻",
+                "url": "/douban/moment"
+            }
+        ]
+    },
+    {
+        "name": "爱范儿",
+        "info": [
+            {
+                "name": "爱范儿",
+                "url": "/ifanr/survey"
+            }
+        ]
+    },
+    {
+        "name": "KickStarter",
+        "info": [
+            {
+                "name": "KickStarter",
+                "url": "/kickstarter/latest"
+            }
+        ]
+    }
+]
