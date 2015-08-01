@@ -18,6 +18,15 @@
         ]
     },
     {
+        "name": "澎湃新闻",
+        "info": [
+            {
+                "name": "澎湃新闻",
+                "url": "/thepaper/top"
+            }
+        ]
+    },
+    {
         "name": "V2EX",
         "info": [
             {
@@ -137,6 +146,15 @@
             {
                 "name": "一刻",
                 "url": "/douban/moment"
+            }
+        ]
+    },
+    {
+        "name": "果壳精选",
+        "info": [
+            {
+                "name": "精选",
+                "url": "/guokr/handpick"
             }
         ]
     },
