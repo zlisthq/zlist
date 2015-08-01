@@ -185,6 +185,18 @@ func Toutiao(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, str)
 	return
 }
+func ThePaper(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	str := getJSONStringCached(zlistutil.SITE_THEPAPER, zlistutil.THEPAPER, Num)
+	fmt.Fprint(w, str)
+	return
+}
+func GuokrHandpick(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	str := getJSONStringCached(zlistutil.SITE_GUOKR, zlistutil.GUOKR_HANDPICK, Num)
+	fmt.Fprint(w, str)
+	return
+}
 func Refresh(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	refreshCache(true)
@@ -215,6 +227,8 @@ func refreshCache(flag bool) {
 		zlistutil.MINDSTORE:                                         zlistutil.SITE_MINDSTORE,
 		zlistutil.KICKSTARTER:                                       zlistutil.SITE_KICKSTARTER,
 		zlistutil.TOUTIAO:                                           zlistutil.SITE_TOUTIAO,
+		zlistutil.THEPAPER:                                          zlistutil.SITE_THEPAPER,
+		zlistutil.GUOKR_HANDPICK:                                    zlistutil.SITE_GUOKR,
 	}
 	log.Println("start refresh...")
 	log.Println(time.Now())
@@ -255,5 +269,7 @@ func main() {
 	router.HandleFunc("/mindstore/top", MindStore)
 	router.HandleFunc("/kickstarter/latest", Kickstarter)
 	router.HandleFunc("/toutiao/top", Toutiao)
+	router.HandleFunc("/thepaper/top", ThePaper)
+	router.HandleFunc("/guokr/handpick", GuokrHandpick)
 	log.Println(http.ListenAndServe(":8080", router))
 }
